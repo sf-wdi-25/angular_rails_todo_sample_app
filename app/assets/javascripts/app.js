@@ -1,1 +1,1 @@
-angular.module("SampleApp", ['ui.router']);
+angular.module("SampleApp", ['ui.router', 'templates']);
