@@ -1,11 +1,12 @@
-angular.module("SampleApp", ['ui.router', 'templates'])
+angular.module("SampleApp", ['ui.router', 'templates', 'ngResource'])
   .config(routerConfig)
-  .controller('HomeController', HomeController);
+  .controller('TodosController', TodosController)
+  .factory('TodosFactory', TodosFactory);
 
 
 
 // Your router
-config.$inject = ['$stateProvider', '$urlRouterProvider']; // minification protection
+routerConfig.$inject = ['$stateProvider', '$urlRouterProvider']; // minification protection
 function routerConfig(   $stateProvider,   $urlRouterProvider) {
   // for any unmatched URL redirect to /
   $urlRouterProvider.otherwise("/");
@@ -15,15 +16,26 @@ function routerConfig(   $stateProvider,   $urlRouterProvider) {
   .state('home', {
     url: "/",
     templateUrl: 'home.html',
-    controller: 'HomeController',
-    controllerAs: 'home'
+    controller: 'TodosController',
+    controllerAs: 'todos'
   });
 
 }
 
-
-function HomeController () {
+TodosController.$inject = ['TodosFactory'];
+function TodosController (TodosFactory) {
   var vm = this;
-  console.log("Hi, I'm the HomeController");
-  vm.homeTest = "Welcome to the homepage!";
+  vm.todoList = [];
+  getTodos();
+
+
+  function getTodos() {
+    vm.todoList = TodosFactory.query();
+  }
+
+}
+
+TodosFactory.$inject = ['$resource'];
+function TodosFactory($resource) {
+  return $resource('/api/todos/:todoId');
 }

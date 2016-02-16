@@ -1,3 +1,7 @@
 <h1> template home.html loaded </h1>
 
-<h2>{{ home.homeTest }}</h2>
+<h2>todos</h2>
+
+<ul data-ng-repeat="todo in todos.todoList">
+  <li>{{todo.name}} - {{todo.description}}</li>
+</ul>
