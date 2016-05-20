@@ -7,5 +7,4 @@ Rails.application.routes.draw do
   end
 
 
-  get '*path*', to: 'site#index'
 end
